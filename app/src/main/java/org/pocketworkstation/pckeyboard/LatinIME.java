@@ -1952,8 +1952,35 @@ public class LatinIME extends InputMethodService implements
         final boolean distinctMultiTouch = mKeyboardSwitcher
                 .hasDistinctMultitouch();
         switch (primaryCode) {
-        case Keyboard.KEYCODE_EMOJI:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI, 0, false);
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_SMILEYS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_SMILEYS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_PEOPLE:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_PEOPLE, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_ANIMALS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_ANIMALS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_FOOD:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_FOOD, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_TRAVEL:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_TRAVEL, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_ACTIVITIES:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_ACTIVITIES, 0, false);
+            break; 
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_OBJECTS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_OBJECTS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_FLAGS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_FLAGS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_SYMBOLS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_SYMBOLS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_TIME:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_TIME, 0, false);
             break;
         case Keyboard.KEYCODE_DELETE:
             if (processMultiKey(primaryCode)) {

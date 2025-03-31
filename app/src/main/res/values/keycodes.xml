@@ -25,11 +25,23 @@
     <integer name="key_shift">-1</integer>
     <integer name="key_symbol">-2</integer>
     <integer name="key_delete">-5</integer>
-    <integer name="key_emoji">-7</integer>
+    <integer name="key_emoji">-200</integer>
     <!-- Keycode for F1 (function) key. This one switches between language switch & comma/.com -->
     <integer name="key_settings">-100</integer>
     <integer name="key_voice">-102</integer>
     <integer name="key_f1">-103</integer>
+
+    <!-- Emoji category key codes -->
+    <integer name="key_emoji_category_smileys">-200</integer>
+    <integer name="key_emoji_category_people">-201</integer>
+    <integer name="key_emoji_category_animals">-202</integer>
+    <integer name="key_emoji_category_food">-203</integer>
+    <integer name="key_emoji_category_travel">-204</integer>
+    <integer name="key_emoji_category_activities">-205</integer>
+    <integer name="key_emoji_category_objects">-206</integer>
+    <integer name="key_emoji_category_flags">-207</integer>
+    <integer name="key_emoji_category_symbols">-208</integer>
+    <integer name="key_emoji_category_time">-209</integer>
     <!--  Keycodes for special keys, using negative KeyEvent keycode numbers -->
     <integer name="key_dpad_up">-19</integer>    
     <integer name="key_dpad_down">-20</integer>
