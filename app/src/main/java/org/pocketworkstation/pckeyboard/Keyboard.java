@@ -84,6 +84,18 @@ public class Keyboard {
     public static final int KEYCODE_DELETE = -5;
     public static final int KEYCODE_ALT_SYM = -6;
 
+    // Emoji category keycodes
+    public static final int KEYCODE_EMOJI_CATEGORY_SMILEYS = -200;
+    public static final int KEYCODE_EMOJI_CATEGORY_PEOPLE = -201;
+    public static final int KEYCODE_EMOJI_CATEGORY_ANIMALS = -202;
+    public static final int KEYCODE_EMOJI_CATEGORY_FOOD = -203;
+    public static final int KEYCODE_EMOJI_CATEGORY_TRAVEL = -204;
+    public static final int KEYCODE_EMOJI_CATEGORY_ACTIVITIES = -205;
+    public static final int KEYCODE_EMOJI_CATEGORY_OBJECTS = -206;
+    public static final int KEYCODE_EMOJI_CATEGORY_FLAGS = -207;
+    public static final int KEYCODE_EMOJI_CATEGORY_SYMBOLS = -208;
+    public static final int KEYCODE_EMOJI_CATEGORY_TIME = -209;
+
     // Backwards compatible setting to avoid having to change all the kbd_qwerty files
     public static final int DEFAULT_LAYOUT_ROWS = 4;
     public static final int DEFAULT_LAYOUT_COLUMNS = 10;

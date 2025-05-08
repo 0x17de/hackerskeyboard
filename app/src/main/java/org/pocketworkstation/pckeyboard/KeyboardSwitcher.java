@@ -40,6 +40,16 @@ public class KeyboardSwitcher implements
     public static final int MODE_EMAIL = 5;
     public static final int MODE_IM = 6;
     public static final int MODE_WEB = 7;
+    public static final int MODE_EMOJI_SMILEYS = 8;
+    public static final int MODE_EMOJI_PEOPLE = 9;
+    public static final int MODE_EMOJI_ANIMALS = 10;
+    public static final int MODE_EMOJI_FOOD = 11;
+    public static final int MODE_EMOJI_SYMBOLS = 12;
+    public static final int MODE_EMOJI_TRAVEL = 13;
+    public static final int MODE_EMOJI_ACTIVITIES = 14;
+    public static final int MODE_EMOJI_OBJECTS = 15;
+    public static final int MODE_EMOJI_FLAGS = 16;
+    public static final int MODE_EMOJI_TIME = 17;
 
     // Main keyboard layouts without the settings key
     public static final int KEYBOARDMODE_NORMAL = R.id.mode_normal;
@@ -47,6 +57,7 @@ public class KeyboardSwitcher implements
     public static final int KEYBOARDMODE_EMAIL = R.id.mode_email;
     public static final int KEYBOARDMODE_IM = R.id.mode_im;
     public static final int KEYBOARDMODE_WEB = R.id.mode_webentry;
+    public static final int KEYBOARDMODE_EMOJI = R.id.mode_emoji;
     // Main keyboard layouts with the settings key
     public static final int KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY = R.id.mode_normal_with_settings_key;
     public static final int KEYBOARDMODE_URL_WITH_SETTINGS_KEY = R.id.mode_url_with_settings_key;
@@ -82,11 +93,21 @@ public class KeyboardSwitcher implements
     private static final int KBD_FULL_FN = R.xml.kbd_full_fn;
     private static final int KBD_COMPACT = R.xml.kbd_compact;
     private static final int KBD_COMPACT_FN = R.xml.kbd_compact_fn;
+    private static final int KBD_EMOJI_SMILEYS = R.xml.kbd_emoji_smileys;
+    private static final int KBD_EMOJI_PEOPLE = R.xml.kbd_emoji_people;
+    private static final int KBD_EMOJI_ANIMALS = R.xml.kbd_emoji_animals;
+    private static final int KBD_EMOJI_FOOD = R.xml.kbd_emoji_food;
+    private static final int KBD_EMOJI_SYMBOLS = R.xml.kbd_emoji_symbols;
+    private static final int KBD_EMOJI_TRAVEL = R.xml.kbd_emoji_travel;
+    private static final int KBD_EMOJI_ACTIVITIES = R.xml.kbd_emoji_activities;
+    private static final int KBD_EMOJI_OBJECTS = R.xml.kbd_emoji_objects;
+    private static final int KBD_EMOJI_FLAGS = R.xml.kbd_emoji_flags;
+    private static final int KBD_EMOJI_TIME = R.xml.kbd_emoji_time;
 
     private LatinKeyboardView mInputView;
     private static final int[] ALPHABET_MODES = { KEYBOARDMODE_NORMAL,
             KEYBOARDMODE_URL, KEYBOARDMODE_EMAIL, KEYBOARDMODE_IM,
-            KEYBOARDMODE_WEB, KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY,
+            KEYBOARDMODE_WEB, KEYBOARDMODE_EMOJI, KEYBOARDMODE_NORMAL_WITH_SETTINGS_KEY,
             KEYBOARDMODE_URL_WITH_SETTINGS_KEY,
             KEYBOARDMODE_EMAIL_WITH_SETTINGS_KEY,
             KEYBOARDMODE_IM_WITH_SETTINGS_KEY,
@@ -368,6 +389,26 @@ public class KeyboardSwitcher implements
             case MODE_WEB:
                 return new KeyboardId(mFullMode == 1 ? KBD_COMPACT : KBD_FULL,
                         KEYBOARDMODE_NORMAL, true, hasVoice);
+            case MODE_EMOJI_SMILEYS:
+                return new KeyboardId(KBD_EMOJI_SMILEYS, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_PEOPLE:
+                return new KeyboardId(KBD_EMOJI_PEOPLE, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_ANIMALS:
+                return new KeyboardId(KBD_EMOJI_ANIMALS, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_FOOD:
+                return new KeyboardId(KBD_EMOJI_FOOD, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_SYMBOLS:
+                return new KeyboardId(KBD_EMOJI_SYMBOLS, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_TRAVEL:
+                return new KeyboardId(KBD_EMOJI_TRAVEL, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_ACTIVITIES:
+                return new KeyboardId(KBD_EMOJI_ACTIVITIES, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_OBJECTS:
+                return new KeyboardId(KBD_EMOJI_OBJECTS, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_FLAGS:
+                return new KeyboardId(KBD_EMOJI_FLAGS, KEYBOARDMODE_EMOJI, true, false);
+            case MODE_EMOJI_TIME:
+                return new KeyboardId(KBD_EMOJI_TIME, KEYBOARDMODE_EMOJI, true, false);
             }
         }
         // TODO: generalize for any KeyboardId
@@ -411,6 +452,26 @@ public class KeyboardSwitcher implements
             return new KeyboardId(keyboardRowsResId,
                     mHasSettingsKey ? KEYBOARDMODE_WEB_WITH_SETTINGS_KEY
                             : KEYBOARDMODE_WEB, true, hasVoice);
+        case MODE_EMOJI_SMILEYS:
+            return new KeyboardId(KBD_EMOJI_SMILEYS, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_PEOPLE:
+            return new KeyboardId(KBD_EMOJI_PEOPLE, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_ANIMALS:
+            return new KeyboardId(KBD_EMOJI_ANIMALS, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_FOOD:
+            return new KeyboardId(KBD_EMOJI_FOOD, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_SYMBOLS:
+            return new KeyboardId(KBD_EMOJI_SYMBOLS, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_TRAVEL:
+            return new KeyboardId(KBD_EMOJI_TRAVEL, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_ACTIVITIES:
+            return new KeyboardId(KBD_EMOJI_ACTIVITIES, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_OBJECTS:
+            return new KeyboardId(KBD_EMOJI_OBJECTS, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_FLAGS:
+            return new KeyboardId(KBD_EMOJI_FLAGS, KEYBOARDMODE_EMOJI, true, false);
+        case MODE_EMOJI_TIME:
+            return new KeyboardId(KBD_EMOJI_TIME, KEYBOARDMODE_EMOJI, true, false);
         }
         return null;
     }

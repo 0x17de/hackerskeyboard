@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:keyWidth="7.1428571485%p"
+    app:horizontalGap="0px"
+    app:verticalGap="@dimen/key_bottom_gap"
+    app:layoutRows="6"
+    app:layoutColumns="14"
+>
+    <!-- Category indicator row -->
+    <Row app:rowEdgeFlags="top">
+        <Key app:keyLabel="😀" app:keyWidth="10%p" app:keyEdgeFlags="left" app:codes="@integer/key_emoji_category_smileys" />
+        <Key app:keyLabel="👋" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_people" />
+        <Key app:keyLabel="🐱" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_animals" />
+        <Key app:keyLabel="🍎" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_food" />
+        <Key app:keyLabel="🚗" app:keyWidth="10%p"
+            app:keyBackground="@drawable/btn_keyboard_key_active_material_dark"
+            app:codes="@integer/key_emoji_category_travel" />
+        <Key app:keyLabel="⚽" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_activities" />
+        <Key app:keyLabel="💡" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_objects" />
+        <Key app:keyLabel="🏳️" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_flags" />
+        <Key app:keyLabel="❤️" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_symbols" />
+        <Key app:keyLabel="🕙" app:keyWidth="10%p" app:codes="@integer/key_emoji_category_time" app:keyEdgeFlags="right" />
+    </Row>
+
+    <!-- Travel & Places -->
+    <Row>
+        <Key app:codes="0x1F697" app:keyLabel="🚗" />
+        <Key app:codes="0x1F698" app:keyLabel="🚘" />
+        <Key app:codes="0x1F699" app:keyLabel="🚙" />
+        <Key app:codes="0x1F695" app:keyLabel="🚕" />
+        <Key app:codes="0x1F696" app:keyLabel="🚖" />
+        <Key app:codes="0x1F69A" app:keyLabel="🚚" />
+        <Key app:codes="0x1F69B" app:keyLabel="🚛" />
+        <Key app:codes="0x1F69C" app:keyLabel="🚜" />
+        <Key app:codes="0x1F3CE" app:keyLabel="🏎" />
+        <Key app:codes="0x1F68C" app:keyLabel="🚌" />
+        <Key app:codes="0x1F68D" app:keyLabel="🚍" />
+        <Key app:codes="0x1F68E" app:keyLabel="🚎" />
+        <Key app:codes="0x1F690" app:keyLabel="🚐" />
+        <Key app:codes="0x1F691" app:keyLabel="🚑" />
+    </Row>
+    <Row>
+        <Key app:codes="0x1F692" app:keyLabel="🚒" />
+        <Key app:codes="0x1F693" app:keyLabel="🚓" />
+        <Key app:codes="0x1F694" app:keyLabel="🚔" />
+        <Key app:codes="0x1F6B2" app:keyLabel="🚲" />
+        <Key app:codes="0x1F6F4" app:keyLabel="🛴" />
+        <Key app:codes="0x1F6F5" app:keyLabel="🛵" />
+        <Key app:codes="0x1F3CD" app:keyLabel="🏍" />
+        <Key app:codes="0x1F6A8" app:keyLabel="🚨" />
+        <Key app:codes="0x1F68F" app:keyLabel="🚏" />
+        <Key app:codes="0x1F6A6" app:keyLabel="🚦" />
+        <Key app:codes="0x1F6A7" app:keyLabel="🚧" />
+        <Key app:codes="0x2693" app:keyLabel="⚓" />
+        <Key app:codes="0x1F6A3" app:keyLabel="🚣" />
+        <Key app:codes="0x1F6A4" app:keyLabel="🚤" />
+    </Row>
+    <Row>
+        <Key app:codes="0x1F6F3" app:keyLabel="🛳" />
+        <Key app:codes="0x26F4" app:keyLabel="⛴" />
+        <Key app:codes="0x1F6E5" app:keyLabel="🛥" />
+        <Key app:codes="0x1F6A2" app:keyLabel="🚢" />
+        <Key app:codes="0x2708" app:keyLabel="✈" />
+        <Key app:codes="0x1F6E9" app:keyLabel="🛩" />
+        <Key app:codes="0x1F6EB" app:keyLabel="🛫" />
+        <Key app:codes="0x1F6EC" app:keyLabel="🛬" />
+        <Key app:codes="0x1F681" app:keyLabel="🚁" />
+        <Key app:codes="0x1F6F0" app:keyLabel="🛰" />
+        <Key app:codes="0x1F680" app:keyLabel="🚀" />
+        <Key app:codes="0x1F6F8" app:keyLabel="🛸" />
+        <Key app:codes="0x1F6F6" app:keyLabel="🛶" />
+        <Key app:codes="0x1F6A1" app:keyLabel="🚡" />
+    </Row>
+    <Row>
+        <Key app:codes="0x1F6A0" app:keyLabel="🚠" />
+        <Key app:codes="0x1F683" app:keyLabel="🚃" />
+        <Key app:codes="0x1F684" app:keyLabel="🚄" />
+        <Key app:codes="0x1F685" app:keyLabel="🚅" />
+        <Key app:codes="0x1F686" app:keyLabel="🚆" />
+        <Key app:codes="0x1F687" app:keyLabel="🚇" />
+        <Key app:codes="0x1F688" app:keyLabel="🚈" />
+        <Key app:codes="0x1F689" app:keyLabel="🚉" />
+        <Key app:codes="0x1F68A" app:keyLabel="🚊" />
+        <Key app:codes="0x1F682" app:keyLabel="🚂" />
+        <Key app:codes="0x1F6F7" app:keyLabel="🛷" />
+        <Key app:codes="0x1F3D4" app:keyLabel="🏔" />
+        <Key app:codes="0x26F0" app:keyLabel="⛰" />
+        <Key app:codes="0x1F3D5" app:keyLabel="🏕" />
+    </Row>
+    <!-- Bottom row with navigation and space -->
+    <Row app:rowEdgeFlags="bottom">
+        <Key app:codes="-5" app:keyIcon="@drawable/sym_keyboard_delete"
+            app:keyWidth="10%p" app:keyEdgeFlags="left" />
+        <Key app:codes="-2" app:keyLabel="ABC" app:keyWidth="15%p" />
+        <Key app:codes="32" app:keyIcon="@drawable/sym_keyboard_space"
+            app:keyWidth="40%p" app:isRepeatable="true" />
+        <Key app:codes="10" app:keyIcon="@drawable/sym_keyboard_return"
+            app:keyWidth="15%p" />
+        <Key app:codes="-4" app:keyIcon="@drawable/sym_keyboard_done"
+            app:keyWidth="10%p" app:keyEdgeFlags="right" />
+    </Row>
+</Keyboard>

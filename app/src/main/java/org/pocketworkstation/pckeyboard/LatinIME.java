@@ -1952,6 +1952,36 @@ public class LatinIME extends InputMethodService implements
         final boolean distinctMultiTouch = mKeyboardSwitcher
                 .hasDistinctMultitouch();
         switch (primaryCode) {
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_SMILEYS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_SMILEYS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_PEOPLE:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_PEOPLE, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_ANIMALS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_ANIMALS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_FOOD:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_FOOD, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_TRAVEL:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_TRAVEL, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_ACTIVITIES:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_ACTIVITIES, 0, false);
+            break; 
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_OBJECTS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_OBJECTS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_FLAGS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_FLAGS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_SYMBOLS:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_SYMBOLS, 0, false);
+            break;
+        case Keyboard.KEYCODE_EMOJI_CATEGORY_TIME:
+            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_TIME, 0, false);
+            break;
         case Keyboard.KEYCODE_DELETE:
             if (processMultiKey(primaryCode)) {
                 break;
@@ -2081,7 +2111,14 @@ public class LatinIME extends InputMethodService implements
             if (primaryCode != ASCII_ENTER) {
                 mJustAddedAutoSpace = false;
             }
-            RingCharBuffer.getInstance().push((char) primaryCode, x, y);
+            if (Character.isSupplementaryCodePoint(primaryCode)) {
+                char[] chars = Character.toChars(primaryCode);
+                for (char c : chars) {
+                    RingCharBuffer.getInstance().push(c, x, y);
+                }
+            } else {
+                RingCharBuffer.getInstance().push((char) primaryCode, x, y);
+            }
             if (isWordSeparator(primaryCode)) {
                 handleSeparator(primaryCode);
             } else {
@@ -2323,6 +2360,15 @@ public class LatinIME extends InputMethodService implements
                 // could be either auto-caps or manual shift.
                 mWord.setFirstCharCapitalized(true);
             }
+            
+            if (Character.isSupplementaryCodePoint(primaryCode)) {
+                char[] chars = Character.toChars(primaryCode);
+                for (char c : chars) {
+                    mComposing.append(c);
+                }
+            } else {
+                mComposing.append((char) primaryCode);
+            }
             mComposing.append((char) primaryCode);
             mWord.add(primaryCode, keyCodes);
             InputConnection ic = getCurrentInputConnection();
@@ -2336,11 +2382,26 @@ public class LatinIME extends InputMethodService implements
             }
             postUpdateSuggestions();
         } else {
-            sendModifiableKeyChar((char) primaryCode);
+            if (Character.isSupplementaryCodePoint(primaryCode)) {
+                char[] chars = Character.toChars(primaryCode);
+                for (char c : chars) {
+                    sendModifiableKeyChar(c);
+                }
+            } else {
+                sendModifiableKeyChar((char) primaryCode);
+            }
         }
         updateShiftKeyState(getCurrentInputEditorInfo());
-        TextEntryState.typedCharacter((char) primaryCode,
+        if (Character.isSupplementaryCodePoint(primaryCode)) {
+            char[] chars = Character.toChars(primaryCode);
+            for (char c : chars) {
+                TextEntryState.typedCharacter(c,
+                    isWordSeparator(primaryCode));
+            }
+        } else {
+            TextEntryState.typedCharacter((char) primaryCode,
                 isWordSeparator(primaryCode));
+        }
     }
 
     private void handleSeparator(int primaryCode) {
@@ -2390,7 +2451,15 @@ public class LatinIME extends InputMethodService implements
             removeTrailingSpace();
             mJustAddedAutoSpace = false;
         }
-        sendModifiableKeyChar((char) primaryCode);
+        
+        if (Character.isSupplementaryCodePoint(primaryCode)) {
+            char[] chars = Character.toChars(primaryCode);
+            for (char c : chars) {
+                sendModifiableKeyChar(c);
+            }
+        } else {
+            sendModifiableKeyChar((char) primaryCode);
+        }
 
         // Handle the case of ". ." -> " .." with auto-space if necessary
         // before changing the TextEntryState.
@@ -2399,7 +2468,15 @@ public class LatinIME extends InputMethodService implements
             reswapPeriodAndSpace();
         }
 
-        TextEntryState.typedCharacter((char) primaryCode, true);
+        if (Character.isSupplementaryCodePoint(primaryCode)) {
+            char[] chars = Character.toChars(primaryCode);
+            for (char c : chars) {
+                TextEntryState.typedCharacter(c, true);
+            }
+        } else {
+            TextEntryState.typedCharacter((char) primaryCode, true);
+        }
+            
         if (TextEntryState.getState() == TextEntryState.State.PUNCTUATION_AFTER_ACCEPTED
                 && primaryCode != ASCII_ENTER) {
             swapPunctuationAndSpace();
