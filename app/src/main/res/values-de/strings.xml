@@ -137,4 +137,34 @@
     <string name="keyboard_layout" msgid="437433231038683666">"Tastaturdesign"</string>
     <string name="subtype_mode_keyboard" msgid="2242090416595003881">"Tastatur"</string>
     <string name="subtype_mode_voice" msgid="4394113125441627771">"Sprache"</string>
+    <!-- Emoji palette -->
+    <string name="emoji_category_recents">Zuletzt verwendet</string>
+    <string name="emoji_category_smileys">Smileys &amp; Emotionen</string>
+    <string name="emoji_category_people">Menschen &amp; Körper</string>
+    <string name="emoji_category_animals">Tiere &amp; Natur</string>
+    <string name="emoji_category_food">Essen &amp; Trinken</string>
+    <string name="emoji_category_travel">Reisen &amp; Orte</string>
+    <string name="emoji_category_activities">Aktivitäten</string>
+    <string name="emoji_category_objects">Objekte</string>
+    <string name="emoji_category_symbols">Symbole</string>
+    <string name="emoji_category_flags">Flaggen</string>
+    <string name="emoji_search_hint">Emoji suchen</string>
+    <string name="emoji_search_close">Zurück zu den Emoji</string>
+    <string name="emoji_search_no_results">Keine Emoji gefunden</string>
+    <string name="emoji_space">Leertaste</string>
+    <string name="emoji_delete">Löschen</string>
+    <string name="emoji_loading">Emoji werden geladen…</string>
+    <string name="emoji_recents_empty">Hier erscheinen deine zuletzt verwendeten Emoji</string>
+    <string name="emoji_settings_category">Emoji</string>
+    <string name="emoji_suggestions">Emoji-Vorschläge</string>
+    <string name="emoji_suggestions_summary">Passende Emoji zum getippten Wort vorschlagen</string>
+    <string name="emoji_skin_tone">Standard-Hautfarbe</string>
+    <string-array name="emoji_skin_tones">
+        <item>Standard 👋</item>
+        <item>Hell 👋🏻</item>
+        <item>Mittelhell 👋🏼</item>
+        <item>Mittel 👋🏽</item>
+        <item>Mitteldunkel 👋🏾</item>
+        <item>Dunkel 👋🏿</item>
+    </string-array>
 </resources>

@@ -763,6 +763,10 @@ public class LatinKeyboardBaseView extends View implements PointerTracker.UIProx
         return mShowPreview;
     }
 
+    public int getKeyTextColor() {
+        return mKeyTextColor;
+    }
+
     private boolean isBlackSym() {
         return mSymbolColorScheme == 1;
     }

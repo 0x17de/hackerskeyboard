@@ -261,6 +261,29 @@
     </PreferenceCategory>
 
     <PreferenceCategory
+            android:title="@string/emoji_settings_category"
+            android:key="emoji_settings">
+
+        <CheckBoxPreference
+            android:key="pref_emoji_suggestions"
+            android:title="@string/emoji_suggestions"
+            android:summary="@string/emoji_suggestions_summary"
+            android:persistent="true"
+            android:defaultValue="true"
+            android:dependency="show_suggestions"
+            />
+
+        <org.pocketworkstation.pckeyboard.AutoSummaryListPreference
+            android:key="pref_emoji_skin_tone"
+            android:title="@string/emoji_skin_tone"
+            android:persistent="true"
+            android:entries="@array/emoji_skin_tones"
+            android:entryValues="@array/emoji_skin_tone_values"
+            android:defaultValue=""
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory
             android:title="@string/title_input_mode_settings"
             android:key="graphics_settings">
 

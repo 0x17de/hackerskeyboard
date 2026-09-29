@@ -591,6 +591,7 @@
         <item>Decrease height</item>
         <item>Previous language</item>
 -       <item>Next language</item>
+        <item>Emoji palette</item>
         </string-array>
     <string-array name="swipe_action_values" translatable="false">
         <item>none</item>
@@ -604,6 +605,7 @@
         <item>height_down</item>
         <item>lang_prev</item>
 -       <item>lang_next</item>
+        <item>emoji</item>
     </string-array>    
     <string name="default_swipe_up" translatable="false">extension</string>
     <string name="default_swipe_down" translatable="false">close</string>
@@ -687,4 +689,43 @@
     <string name="notification_channel_name" translatable="false">Hacker\'s Keyboard</string>
     <string name="notification_channel_description" translatable="false">Hacker\'s Keyboard</string>
     <string name="notification_action_settings" translatable="false">Settings</string>
+    <!-- Emoji palette -->
+    <string name="emoji_category_recents">Recently used</string>
+    <string name="emoji_category_smileys">Smileys &amp; emotion</string>
+    <string name="emoji_category_people">People &amp; body</string>
+    <string name="emoji_category_animals">Animals &amp; nature</string>
+    <string name="emoji_category_food">Food &amp; drink</string>
+    <string name="emoji_category_travel">Travel &amp; places</string>
+    <string name="emoji_category_activities">Activities</string>
+    <string name="emoji_category_objects">Objects</string>
+    <string name="emoji_category_symbols">Symbols</string>
+    <string name="emoji_category_flags">Flags</string>
+    <string name="emoji_switch_to_keyboard">ABC</string>
+    <string name="emoji_search_hint">Search emoji</string>
+    <string name="emoji_search_close">Back to emoji</string>
+    <string name="emoji_search_no_results">No emoji found</string>
+    <string name="emoji_space">Space</string>
+    <string name="emoji_delete">Delete</string>
+    <string name="emoji_loading">Loading emoji…</string>
+    <string name="emoji_recents_empty">Emoji you use will show up here</string>
+    <string name="emoji_settings_category">Emoji</string>
+    <string name="emoji_suggestions">Emoji suggestions</string>
+    <string name="emoji_suggestions_summary">Suggest emoji for the word being typed</string>
+    <string name="emoji_skin_tone">Default skin tone</string>
+    <string-array name="emoji_skin_tones">
+        <item>Default 👋</item>
+        <item>Light 👋🏻</item>
+        <item>Medium-light 👋🏼</item>
+        <item>Medium 👋🏽</item>
+        <item>Medium-dark 👋🏾</item>
+        <item>Dark 👋🏿</item>
+    </string-array>
+    <string-array name="emoji_skin_tone_values" translatable="false">
+        <item></item>
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+    </string-array>
 </resources>

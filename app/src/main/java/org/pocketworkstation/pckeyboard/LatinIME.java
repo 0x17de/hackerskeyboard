@@ -164,6 +164,7 @@ public class LatinIME extends InputMethodService implements
     private AlertDialog mOptionsDialog;
 
     /* package */KeyboardSwitcher mKeyboardSwitcher;
+    private EmojiController mEmoji;
 
     private UserDictionary mUserDictionary;
     private UserBigramDictionary mUserBigramDictionary;
@@ -359,6 +360,7 @@ public class LatinIME extends InputMethodService implements
     @Override
     public void onCreate() {
         Log.i("PCKeyboard", "onCreate(), os.version=" + System.getProperty("os.version"));
+        mEmoji = new EmojiController(this);
         KeyboardSwitcher.init(this);
         super.onCreate();
         sInstance = this;
@@ -707,7 +709,7 @@ public class LatinIME extends InputMethodService implements
         mKeyboardSwitcher.makeKeyboards(true);
         mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_TEXT, 0,
                 shouldShowVoiceButton(getCurrentInputEditorInfo()));
-        return mKeyboardSwitcher.getInputView();
+        return mKeyboardSwitcher.getInputContainer();
     }
 
     @Override
@@ -778,6 +780,11 @@ public class LatinIME extends InputMethodService implements
         if (inputView == null) {
             return;
         }
+
+        if (!restarting) {
+            mEmoji.reset();
+        }
+        mEmoji.preload();
 
         if (mRefreshKeyboardRequired) {
             mRefreshKeyboardRequired = false;
@@ -969,6 +976,7 @@ public class LatinIME extends InputMethodService implements
     @Override
     public void onFinishInputView(boolean finishingInput) {
         super.onFinishInputView(finishingInput);
+        mEmoji.reset();
         // Remove penging messages related to update suggestions
         mHandler.removeMessages(MSG_UPDATE_SUGGESTIONS);
         mHandler.removeMessages(MSG_UPDATE_OLD_SUGGESTIONS);
@@ -1207,6 +1215,9 @@ public class LatinIME extends InputMethodService implements
             if (event.getRepeatCount() == 0
                     && mKeyboardSwitcher.getInputView() != null) {
                 if (mKeyboardSwitcher.getInputView().handleBack()) {
+                    return true;
+                }
+                if (mEmoji.handleBack()) {
                     return true;
                 }
             }
@@ -1951,36 +1962,15 @@ public class LatinIME extends InputMethodService implements
         mLastKeyTime = when;
         final boolean distinctMultiTouch = mKeyboardSwitcher
                 .hasDistinctMultitouch();
+        if (mEmoji.handleSearchKey(primaryCode)) {
+            // Release one-shot shift and return from symbols as for normal typing.
+            updateShiftKeyState(getCurrentInputEditorInfo());
+            mKeyboardSwitcher.onKey(primaryCode);
+            return;
+        }
         switch (primaryCode) {
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_SMILEYS:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_SMILEYS, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_PEOPLE:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_PEOPLE, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_ANIMALS:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_ANIMALS, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_FOOD:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_FOOD, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_TRAVEL:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_TRAVEL, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_ACTIVITIES:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_ACTIVITIES, 0, false);
-            break; 
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_OBJECTS:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_OBJECTS, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_FLAGS:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_FLAGS, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_SYMBOLS:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_SYMBOLS, 0, false);
-            break;
-        case Keyboard.KEYCODE_EMOJI_CATEGORY_TIME:
-            mKeyboardSwitcher.setKeyboardMode(KeyboardSwitcher.MODE_EMOJI_TIME, 0, false);
+        case Keyboard.KEYCODE_EMOJI:
+            showEmojiPalette();
             break;
         case Keyboard.KEYCODE_DELETE:
             if (processMultiKey(primaryCode)) {
@@ -2135,6 +2125,9 @@ public class LatinIME extends InputMethodService implements
 
     public void onText(CharSequence text) {
         //mDeadAccentBuffer.clear();  // FIXME
+        if (mEmoji.handleSearchText(text)) {
+            return;
+        }
         InputConnection ic = getCurrentInputConnection();
         if (ic == null)
             return;
@@ -2166,6 +2159,74 @@ public class LatinIME extends InputMethodService implements
     public void onCancel() {
         // User released a finger outside any key
         mKeyboardSwitcher.onCancelInput();
+    }
+
+    EmojiController getEmojiController() {
+        return mEmoji;
+    }
+
+    Locale getEmojiInputLocale() {
+        return mLanguageSwitcher != null ? mLanguageSwitcher.getInputLocale() : null;
+    }
+
+    private void showEmojiPalette() {
+        commitTyped(getCurrentInputConnection(), true);
+        mEmoji.showPalette();
+    }
+
+    /** The emoji palette or search opened or closed. */
+    void onEmojiModeChanged() {
+        if (mEmoji.isSearching() && !mKeyboardSwitcher.isAlphabetMode()) {
+            changeKeyboardMode();
+        }
+        setCandidatesViewShown(isCandidateStripVisible() || mCompletionOn);
+        if (!mEmoji.isActive()) {
+            updateShiftKeyState(getCurrentInputEditorInfo());
+        }
+    }
+
+    /** Inserts an emoji from the palette, search results or suggestion strip. */
+    void commitEmoji(String emoji) {
+        InputConnection ic = getCurrentInputConnection();
+        if (ic == null)
+            return;
+        abortCorrection(false);
+        ic.beginBatchEdit();
+        if (mPredicting) {
+            commitTyped(ic, true);
+        }
+        ic.commitText(emoji, 1);
+        ic.endBatchEdit();
+        // Otherwise a backspace right after "word<space>emoji" would try to
+        // undo the auto-correction of "word" instead of deleting the emoji.
+        TextEntryState.reset();
+        mEmoji.onEmojiCommitted(emoji);
+        updateShiftKeyState(getCurrentInputEditorInfo());
+        mJustRevertedSeparator = null;
+        mJustAddedAutoSpace = false;
+        // Lets backspace remove the whole emoji sequence at once.
+        mEnteredText = emoji;
+    }
+
+    void emojiKeyFeedback(int primaryCode) {
+        vibrate();
+        playKeyClick(primaryCode);
+    }
+
+    /**
+     * Deletes an emoji sequence (flag, ZWJ sequence, skin tone, ...) before the
+     * cursor as a whole. A DEL key event could leave half of it behind in
+     * editors that delete one code point at a time.
+     */
+    private boolean deleteEmojiBeforeCursor(InputConnection ic) {
+        CharSequence selected = ic.getSelectedText(0);
+        if (selected != null && selected.length() > 0) return false;
+        CharSequence before = ic.getTextBeforeCursor(EmojiData.MAX_SEQUENCE_LENGTH, 0);
+        if (before == null) return false;
+        int length = EmojiData.lastSequenceLength(before);
+        if (length < 2) return false;
+        ic.deleteSurroundingText(length, 0);
+        return true;
     }
 
     private void handleBackspace() {
@@ -2213,7 +2274,7 @@ public class LatinIME extends InputMethodService implements
                 // inconsistent with backspacing after selecting other
                 // suggestions.
                 revertLastWord(deleteChar);
-            } else {
+            } else if (!deleteEmojiBeforeCursor(ic)) {
                 sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
                 if (mDeleteCount > DELETE_ACCELERATE_AT) {
                     sendDownUpKeyEvents(KeyEvent.KEYCODE_DEL);
@@ -2534,25 +2595,7 @@ public class LatinIME extends InputMethodService implements
     }
 
     private boolean isCandidateStripVisible() {
-        return isPredictionOn();
-    }
-
-    private void switchToKeyboardView() {
-        mHandler.post(new Runnable() {
-            public void run() {
-                LatinKeyboardView view = mKeyboardSwitcher.getInputView(); 
-                if (view != null) {
-                    ViewParent p = view.getParent();
-                    if (p != null && p instanceof ViewGroup) {
-                        ((ViewGroup) p).removeView(view);
-                    }
-                    setInputView(mKeyboardSwitcher.getInputView());
-                }
-                setCandidatesViewShown(true);
-                updateInputViewShown();
-                postUpdateSuggestions();
-            }
-        });
+        return isPredictionOn() && !mEmoji.isActive();
     }
 
     private void clearSuggestions() {
@@ -2642,7 +2685,12 @@ public class LatinIME extends InputMethodService implements
     private void showSuggestions(List<CharSequence> stringList,
             CharSequence typedWord, boolean typedWordValid,
             boolean correctionAvailable) {
-        setSuggestions(stringList, false, typedWordValid, correctionAvailable);
+        List<CharSequence> shownList = mEmoji.addSuggestions(stringList, typedWord);
+        // Emoji go after the auto-correction at index 1. If there is none,
+        // don't let the emoji at index 1 be highlighted as if it were one.
+        boolean highlightCorrection = correctionAvailable
+                && (shownList == stringList || stringList.size() > 1 || typedWordValid);
+        setSuggestions(shownList, false, typedWordValid, highlightCorrection);
         if (stringList.size() > 0) {
             if (correctionAvailable && !typedWordValid && stringList.size() > 1) {
                 mBestWord = stringList.get(1);
@@ -2692,6 +2740,14 @@ public class LatinIME extends InputMethodService implements
                 mCandidateView.clear();
             }
             updateShiftKeyState(getCurrentInputEditorInfo());
+            if (ic != null) {
+                ic.endBatchEdit();
+            }
+            return;
+        }
+
+        if (mEmoji.isSuggestedEmoji(suggestion)) {
+            pickEmojiSuggestion(ic, suggestion);
             if (ic != null) {
                 ic.endBatchEdit();
             }
@@ -2751,6 +2807,23 @@ public class LatinIME extends InputMethodService implements
         if (ic != null) {
             ic.endBatchEdit();
         }
+    }
+
+    /** Replaces the word being typed with the emoji picked from the suggestions. */
+    private void pickEmojiSuggestion(InputConnection ic, CharSequence emoji) {
+        if (ic != null) {
+            ic.commitText(emoji, 1);
+        }
+        mPredicting = false;
+        mComposing.setLength(0);
+        mWord.reset();
+        mCommittedLength = emoji.length();
+        mJustAddedAutoSpace = false;
+        mEnteredText = emoji;
+        TextEntryState.reset();
+        mEmoji.onEmojiCommitted(emoji.toString());
+        setNextSuggestions();
+        updateShiftKeyState(getCurrentInputEditorInfo());
     }
 
     private void rememberReplacedWord(CharSequence suggestion) {
@@ -3000,7 +3073,8 @@ public class LatinIME extends InputMethodService implements
         mAutoCapActive = mAutoCapPref && mLanguageSwitcher.allowAutoCap();
         mDeadKeysActive = mLanguageSwitcher.allowDeadKeys();
         updateShiftKeyState(getCurrentInputEditorInfo());
-        setCandidatesViewShown(isPredictionOn());
+        setCandidatesViewShown(isCandidateStripVisible());
+        mEmoji.preload(); // emoji keywords for the new language
     }
 
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
@@ -3072,7 +3146,7 @@ public class LatinIME extends InputMethodService implements
             // in portrait mode, or if suggestions in landscape enabled.
             mSuggestionForceOff = false;
             mSuggestionForceOn = false;
-            setCandidatesViewShown(isPredictionOn());
+            setCandidatesViewShown(isCandidateStripVisible());
         } else if (PREF_SHOW_SUGGESTIONS.equals(key)) {
             mShowSuggestions = sharedPreferences.getBoolean(
                     PREF_SHOW_SUGGESTIONS, res.getBoolean(R.bool.default_suggestions));
@@ -3140,7 +3214,9 @@ public class LatinIME extends InputMethodService implements
             } else {
                 mSuggestionForceOn = true;
             }
-            setCandidatesViewShown(isPredictionOn());
+            setCandidatesViewShown(isCandidateStripVisible());
+        } else if (action.equals("emoji")) {
+            showEmojiPalette();
         } else if (action.equals("lang_prev")) {
             toggleLanguage(false, false);
         } else if (action.equals("lang_next")) {

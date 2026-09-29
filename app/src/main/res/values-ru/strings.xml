@@ -463,6 +463,7 @@
         <item>Уменьшить высоту</item>
         <item>Предыдущий язык</item>
 -       <item>Следующий язык</item>
+        <item>Эмодзи</item>
     </string-array>
 
     <string name="title_popup_content">Всплывающая мини клавиатура</string>
