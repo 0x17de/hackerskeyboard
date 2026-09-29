@@ -253,6 +253,7 @@ public class EmojiController implements EmojiPalettesView.Listener, EmojiSearchV
         case LatinKeyboardView.KEYCODE_OPTIONS_LONGPRESS:
         case LatinKeyboardView.KEYCODE_NEXT_LANGUAGE:
         case LatinKeyboardView.KEYCODE_PREV_LANGUAGE:
+        case LatinKeyboardView.KEYCODE_NEXT_LAYOUT:
         case LatinKeyboardView.KEYCODE_FN:
             return false;
         }

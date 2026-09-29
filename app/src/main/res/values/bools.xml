@@ -41,4 +41,5 @@
     <bool name="default_add_shift_to_popup">false</bool>
     <bool name="default_caps_lock">true</bool>
     <bool name="default_shift_lock_modifiers">true</bool>
+    <bool name="default_space_hold_switch_layout">true</bool>
 </resources>

@@ -54,6 +54,9 @@ public final class GlobalKeyboardSettings {
     public boolean capsLock = true;
     public boolean shiftLockModifiers = false;
     //
+    // Read by LatinKeyboardView
+    public boolean spaceHoldSwitchesLayout = true;
+    //
     // Read by LatinKeyboardBaseView
     public float labelScalePref = 1.0f;
     //
@@ -220,6 +223,12 @@ public final class GlobalKeyboardSettings {
         addBooleanPref("pref_shift_lock_modifiers", new BooleanPref() {
             public void set(boolean val) { shiftLockModifiers = val; }
             public boolean getDefault() { return res.getBoolean(R.bool.default_shift_lock_modifiers); }
+            public int getFlags() { return FLAG_PREF_NONE; }
+        });
+
+        addBooleanPref("pref_space_hold_switch_layout", new BooleanPref() {
+            public void set(boolean val) { spaceHoldSwitchesLayout = val; }
+            public boolean getDefault() { return res.getBoolean(R.bool.default_space_hold_switch_layout); }
             public int getFlags() { return FLAG_PREF_NONE; }
         });
 

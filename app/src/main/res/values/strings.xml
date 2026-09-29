@@ -689,6 +689,12 @@
     <string name="notification_channel_name" translatable="false">Hacker\'s Keyboard</string>
     <string name="notification_channel_description" translatable="false">Hacker\'s Keyboard</string>
     <string name="notification_action_settings" translatable="false">Settings</string>
+    <!-- Layout switching -->
+    <string name="title_space_hold_switch_layout">Hold space to switch layout</string>
+    <string name="summary_space_hold_switch_layout">Long-press the spacebar to go to the next of the layouts selected below, for the current orientation</string>
+    <string name="title_switchable_layouts">Layouts to switch between</string>
+    <string name="summary_switchable_layouts_none">None</string>
+
     <!-- Emoji palette -->
     <string name="emoji_category_recents">Recently used</string>
     <string name="emoji_category_smileys">Smileys &amp; emotion</string>

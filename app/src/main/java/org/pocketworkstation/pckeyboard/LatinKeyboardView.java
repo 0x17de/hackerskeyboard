@@ -51,6 +51,7 @@ public class LatinKeyboardView extends LatinKeyboardBaseView {
     static final int KEYCODE_F1 = -103;
     static final int KEYCODE_NEXT_LANGUAGE = -104;
     static final int KEYCODE_PREV_LANGUAGE = -105;
+    static final int KEYCODE_NEXT_LAYOUT = -106;
     static final int KEYCODE_COMPOSE = -10024;
     
 	// The following keycodes match (negative) KeyEvent keycodes.
@@ -233,6 +234,11 @@ public class LatinKeyboardView extends LatinKeyboardBaseView {
             return invokeOnKey(KEYCODE_OPTIONS_LONGPRESS);
         } else if (primaryCode == KEYCODE_DPAD_CENTER) {
             return invokeOnKey(KEYCODE_COMPOSE);
+        } else if (primaryCode == LatinIME.ASCII_SPACE
+                && LatinIME.sKeyboardSettings.spaceHoldSwitchesLayout
+                && !((LatinKeyboard) getKeyboard()).isSpaceDragInProgress()) {
+            // Holding space switches layout; the space itself is not typed.
+            return invokeOnKey(KEYCODE_NEXT_LAYOUT);
         } else if (primaryCode == '0' && getKeyboard() == mPhoneKeyboard) {
             // Long pressing on 0 in phone number keypad gives you a '+'.
             return invokeOnKey('+');

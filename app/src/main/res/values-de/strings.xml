@@ -137,6 +137,12 @@
     <string name="keyboard_layout" msgid="437433231038683666">"Tastaturdesign"</string>
     <string name="subtype_mode_keyboard" msgid="2242090416595003881">"Tastatur"</string>
     <string name="subtype_mode_voice" msgid="4394113125441627771">"Sprache"</string>
+    <!-- Layout switching -->
+    <string name="title_space_hold_switch_layout">Leertaste halten wechselt Layout</string>
+    <string name="summary_space_hold_switch_layout">Leertaste lange drücken wechselt zum nächsten der unten gewählten Layouts (für die aktuelle Ausrichtung)</string>
+    <string name="title_switchable_layouts">Layouts zum Wechseln</string>
+    <string name="summary_switchable_layouts_none">Keine</string>
+
     <!-- Emoji palette -->
     <string name="emoji_category_recents">Zuletzt verwendet</string>
     <string name="emoji_category_smileys">Smileys &amp; Emotionen</string>

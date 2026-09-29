@@ -64,6 +64,24 @@
             />
 
     <CheckBoxPreference
+            android:key="pref_space_hold_switch_layout"
+            android:title="@string/title_space_hold_switch_layout"
+            android:summary="@string/summary_space_hold_switch_layout"
+            android:persistent="true"
+            android:defaultValue="@bool/default_space_hold_switch_layout"
+            />
+
+    <org.pocketworkstation.pckeyboard.AutoSummaryMultiSelectListPreference
+            android:key="pref_switchable_layouts"
+            android:title="@string/title_switchable_layouts"
+            android:dialogTitle="@string/title_switchable_layouts"
+            android:entries="@array/keyboard_mode_entries"
+            android:entryValues="@array/keyboard_mode_values"
+            android:defaultValue="@array/keyboard_mode_values"
+            android:persistent="true"
+            />
+
+    <CheckBoxPreference
             android:key="suggestions_in_landscape"
             android:title="@string/title_suggestions_in_landscape"
             android:persistent="true" 

@@ -80,6 +80,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
@@ -103,6 +104,9 @@ public class LatinIME extends InputMethodService implements
     private static final String PREF_AUTO_CAP = "auto_cap";
     private static final String PREF_QUICK_FIXES = "quick_fixes";
     private static final String PREF_SHOW_SUGGESTIONS = "show_suggestions";
+    private static final String PREF_SWITCHABLE_LAYOUTS = "pref_switchable_layouts";
+    private static final String PREF_KEYBOARD_MODE_PORTRAIT = "pref_keyboard_mode_portrait";
+    private static final String PREF_KEYBOARD_MODE_LANDSCAPE = "pref_keyboard_mode_landscape";
     private static final String PREF_AUTO_COMPLETE = "auto_complete";
     // private static final String PREF_BIGRAM_SUGGESTIONS =
     // "bigram_suggestion";
@@ -448,6 +452,42 @@ public class LatinIME extends InputMethodService implements
         return num;
     }
     
+    /**
+     * The mode override that selects the next keyboard layout after the
+     * current one among those enabled in the settings, or -1 if there is none.
+     */
+    private int nextLayoutOverride(int baseMode, int override) {
+        Set<String> enabled = PreferenceManager.getDefaultSharedPreferences(this)
+                .getStringSet(PREF_SWITCHABLE_LAYOUTS, null);
+        int current = getKeyboardModeNum(baseMode, override);
+        for (int step = 1; step < mNumKeyboardModes; ++step) {
+            int candidate = (override + step) % mNumKeyboardModes;
+            int mode = getKeyboardModeNum(baseMode, candidate);
+            if (mode != current && (enabled == null || enabled.contains(Integer.toString(mode)))) {
+                return candidate;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Switches to the next enabled layout and keeps it for this orientation,
+     * the way switching languages on the spacebar sticks.
+     */
+    private void switchToNextLayout() {
+        boolean portrait = isPortrait();
+        int base = portrait ? sKeyboardSettings.keyboardModePortrait : sKeyboardSettings.keyboardModeLandscape;
+        int override = portrait ? mKeyboardModeOverridePortrait : mKeyboardModeOverrideLandscape;
+        int next = nextLayoutOverride(base, override);
+        if (next < 0) return;
+        vibrate();
+        // The preference listener resets the override and reloads the keyboards.
+        PreferenceManager.getDefaultSharedPreferences(this).edit()
+                .putString(portrait ? PREF_KEYBOARD_MODE_PORTRAIT : PREF_KEYBOARD_MODE_LANDSCAPE,
+                        Integer.toString(getKeyboardModeNum(base, next)))
+                .apply();
+    }
+
     private void updateKeyboardOptions() {
         //Log.i(TAG, "setFullKeyboardOptions " + fullInPortrait + " " + heightPercentPortrait + " " + heightPercentLandscape);
         boolean isPortrait = isPortrait();
@@ -2034,6 +2074,9 @@ public class LatinIME extends InputMethodService implements
         case LatinKeyboardView.KEYCODE_PREV_LANGUAGE:
             toggleLanguage(false, false);
             break;
+        case LatinKeyboardView.KEYCODE_NEXT_LAYOUT:
+            switchToNextLayout();
+            break;
         case LatinKeyboardView.KEYCODE_VOICE:
             if (mVoiceRecognitionTrigger.isInstalled()) {
                 mVoiceRecognitionTrigger.startVoiceRecognition();
@@ -3222,10 +3265,13 @@ public class LatinIME extends InputMethodService implements
         } else if (action.equals("lang_next")) {
             toggleLanguage(false, true);
         } else if (action.equals("full_mode")) {
+            // Temporary switch for this input field, among the enabled layouts.
             if (isPortrait()) {
-                mKeyboardModeOverridePortrait = (mKeyboardModeOverridePortrait + 1) % mNumKeyboardModes;
+                int next = nextLayoutOverride(sKeyboardSettings.keyboardModePortrait, mKeyboardModeOverridePortrait);
+                if (next >= 0) mKeyboardModeOverridePortrait = next;
             } else {
-                mKeyboardModeOverrideLandscape = (mKeyboardModeOverrideLandscape + 1) % mNumKeyboardModes;
+                int next = nextLayoutOverride(sKeyboardSettings.keyboardModeLandscape, mKeyboardModeOverrideLandscape);
+                if (next >= 0) mKeyboardModeOverrideLandscape = next;
             }
             toggleLanguage(true, true);
         } else if (action.equals("extension")) {

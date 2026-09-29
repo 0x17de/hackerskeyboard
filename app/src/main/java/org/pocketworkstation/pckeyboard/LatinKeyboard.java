@@ -602,6 +602,12 @@ public class LatinKeyboard extends Keyboard {
         return mCurrentlyInSpace;
     }
 
+    /** True once the finger has started sliding on the spacebar to change language. */
+    boolean isSpaceDragInProgress() {
+        return mCurrentlyInSpace
+                && Math.abs(mSpaceDragLastDiff) > getSpacePreviewWidth() * SPACEBAR_DRAG_THRESHOLD / 4;
+    }
+
     void setPreferredLetters(int[] frequencies) {
         mPrefLetterFrequencies = frequencies;
         mPrefLetter = 0;
