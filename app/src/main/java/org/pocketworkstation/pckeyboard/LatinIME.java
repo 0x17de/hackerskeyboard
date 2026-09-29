@@ -2360,16 +2360,7 @@ public class LatinIME extends InputMethodService implements
                 // could be either auto-caps or manual shift.
                 mWord.setFirstCharCapitalized(true);
             }
-            
-            if (Character.isSupplementaryCodePoint(primaryCode)) {
-                char[] chars = Character.toChars(primaryCode);
-                for (char c : chars) {
-                    mComposing.append(c);
-                }
-            } else {
-                mComposing.append((char) primaryCode);
-            }
-            mComposing.append((char) primaryCode);
+            mComposing.appendCodePoint(primaryCode);
             mWord.add(primaryCode, keyCodes);
             InputConnection ic = getCurrentInputConnection();
             if (ic != null) {
