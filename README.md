@@ -24,6 +24,13 @@ Keyboard](https://play.google.com/store/apps/details?id=org.pocketworkstation.pc
 from the Play Store, plus optional [dictionary
 packs](https://play.google.com/store/apps/developer?id=Klaus+Weidner).
 
+## Building ##
+
+The repository ships a Nix flake with JDK 17, Gradle and the Android SDK,
+NDK and CMake versions the build needs:
+
+    nix develop -c gradle assembleRelease
+
 ## Additional resources ##
 
 See the **[Release Notes](https://github.com/klausw/hackerskeyboard/wiki/ReleaseNotes)** for changes in the Play Store released versions.
