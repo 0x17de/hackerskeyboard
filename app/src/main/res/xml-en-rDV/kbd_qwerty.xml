@@ -352,9 +352,8 @@
             app:isModifier="true"
             app:keyEdgeFlags="left" />
         <Key
-            app:codes="@integer/key_settings"
-            app:keyIcon="@drawable/sym_keyboard_settings"
-            app:iconPreview="@drawable/sym_keyboard_feedback_settings"
+            app:codes="@integer/key_emoji"
+            app:keyLabel="🙂"
             app:isModifier="true" />
         <Key
             app:codes="@integer/key_f1"
@@ -390,9 +389,8 @@
             app:isModifier="true"
             app:keyEdgeFlags="left" />
         <Key
-            app:codes="@integer/key_settings"
-            app:keyIcon="@drawable/sym_keyboard_settings"
-            app:iconPreview="@drawable/sym_keyboard_feedback_settings"
+            app:codes="@integer/key_emoji"
+            app:keyLabel="🙂"
             app:isModifier="true" />
         <Key
             app:codes="@integer/key_f1"
@@ -428,9 +426,8 @@
             app:isModifier="true"
             app:keyEdgeFlags="left" />
         <Key
-            app:codes="@integer/key_settings"
-            app:keyIcon="@drawable/sym_keyboard_settings"
-            app:iconPreview="@drawable/sym_keyboard_feedback_settings"
+            app:codes="@integer/key_emoji"
+            app:keyLabel="🙂"
             app:isModifier="true" />
         <Key
             app:codes="@integer/key_f1"
@@ -466,9 +463,8 @@
             app:isModifier="true"
             app:keyEdgeFlags="left" />
         <Key
-            app:codes="@integer/key_settings"
-            app:keyIcon="@drawable/sym_keyboard_settings"
-            app:iconPreview="@drawable/sym_keyboard_feedback_settings"
+            app:codes="@integer/key_emoji"
+            app:keyLabel="🙂"
             app:isModifier="true" />
         <Key
             app:codes="@integer/key_f1"
@@ -505,9 +501,8 @@
             app:isModifier="true"
             app:keyEdgeFlags="left" />
         <Key
-            app:codes="@integer/key_settings"
-            app:keyIcon="@drawable/sym_keyboard_settings"
-            app:iconPreview="@drawable/sym_keyboard_feedback_settings"
+            app:codes="@integer/key_emoji"
+            app:keyLabel="🙂"
             app:isModifier="true" />
         <Key
             app:codes="@integer/key_f1"

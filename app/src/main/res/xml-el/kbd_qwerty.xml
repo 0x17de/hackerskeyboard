@@ -95,7 +95,7 @@
     </Row>
     <Row app:keyboardMode="@+id/mode_normal_with_settings_key" app:rowEdgeFlags="bottom">
         <Key app:codes="@integer/key_symbol" app:keyLabel="@string/label_symbol_key" app:keyWidth="15%p" app:isModifier="true" app:keyEdgeFlags="left"/>
-        <Key app:codes="@integer/key_settings" app:keyIcon="@drawable/sym_keyboard_settings" app:iconPreview="@drawable/sym_keyboard_feedback_settings" app:isModifier="true"/>
+        <Key app:codes="@integer/key_emoji" app:keyLabel="🙂" app:isModifier="true" />
         <Key app:codes="@integer/key_f1" app:isModifier="true"/>
         <Key app:codes="@integer/key_space" app:keyIcon="@drawable/sym_keyboard_space" app:iconPreview="@drawable/sym_keyboard_feedback_space" app:keyWidth="38.3333333%p" app:isModifier="true"/>
         <Key app:keyLabel="." app:keyIcon="@drawable/hint_popup" app:popupKeyboard="@xml/popup_punctuation" app:isModifier="true"/>
@@ -103,7 +103,7 @@
     </Row>
     <Row app:keyboardMode="@+id/mode_url_with_settings_key" app:rowEdgeFlags="bottom">
         <Key app:codes="@integer/key_symbol" app:keyLabel="@string/label_symbol_key" app:keyWidth="15%p" app:isModifier="true" app:keyEdgeFlags="left"/>
-        <Key app:codes="@integer/key_settings" app:keyIcon="@drawable/sym_keyboard_settings" app:iconPreview="@drawable/sym_keyboard_feedback_settings" app:isModifier="true"/>
+        <Key app:codes="@integer/key_emoji" app:keyLabel="🙂" app:isModifier="true" />
         <Key app:codes="@integer/key_f1" app:isModifier="true"/>
         <Key app:codes="@integer/key_space" app:keyIcon="@drawable/sym_keyboard_space" app:iconPreview="@drawable/sym_keyboard_feedback_space" app:keyWidth="38.3333333%p" app:isModifier="true"/>
         <Key app:keyLabel="." app:keyIcon="@drawable/hint_popup" app:popupKeyboard="@xml/popup_punctuation" app:isModifier="true"/>
@@ -111,7 +111,7 @@
     </Row>
     <Row app:keyboardMode="@+id/mode_email_with_settings_key" app:rowEdgeFlags="bottom">
         <Key app:codes="@integer/key_symbol" app:keyLabel="@string/label_symbol_key" app:keyWidth="15%p" app:isModifier="true" app:keyEdgeFlags="left"/>
-        <Key app:codes="@integer/key_settings" app:keyIcon="@drawable/sym_keyboard_settings" app:iconPreview="@drawable/sym_keyboard_feedback_settings" app:isModifier="true"/>
+        <Key app:codes="@integer/key_emoji" app:keyLabel="🙂" app:isModifier="true" />
         <Key app:codes="@integer/key_f1" app:isModifier="true"/>
         <Key app:codes="@integer/key_space" app:keyIcon="@drawable/sym_keyboard_space" app:iconPreview="@drawable/sym_keyboard_feedback_space" app:keyWidth="38.3333333%p" app:isModifier="true"/>
         <Key app:keyLabel="." app:keyIcon="@drawable/hint_popup" app:popupKeyboard="@xml/popup_punctuation" app:isModifier="true"/>
@@ -119,7 +119,7 @@
     </Row>
     <Row app:keyboardMode="@+id/mode_im_with_settings_key" app:rowEdgeFlags="bottom">
         <Key app:codes="@integer/key_symbol" app:keyLabel="@string/label_symbol_key" app:keyWidth="15%p" app:isModifier="true" app:keyEdgeFlags="left"/>
-        <Key app:codes="@integer/key_settings" app:keyIcon="@drawable/sym_keyboard_settings" app:iconPreview="@drawable/sym_keyboard_feedback_settings" app:isModifier="true"/>
+        <Key app:codes="@integer/key_emoji" app:keyLabel="🙂" app:isModifier="true" />
         <Key app:codes="@integer/key_f1" app:isModifier="true"/>
         <Key app:codes="@integer/key_space" app:keyIcon="@drawable/sym_keyboard_space" app:iconPreview="@drawable/sym_keyboard_feedback_space" app:keyWidth="30%p" app:isModifier="true"/>
         <Key app:keyLabel="." app:keyIcon="@drawable/hint_popup" app:popupKeyboard="@xml/popup_punctuation" app:isModifier="true"/>
@@ -127,7 +127,7 @@
     </Row>
     <Row app:keyboardMode="@+id/mode_webentry_with_settings_key" app:rowEdgeFlags="bottom">
         <Key app:codes="@integer/key_symbol" app:keyLabel="@string/label_symbol_key" app:keyWidth="15%p" app:isModifier="true" app:keyEdgeFlags="left"/>
-        <Key app:codes="@integer/key_settings" app:keyIcon="@drawable/sym_keyboard_settings" app:iconPreview="@drawable/sym_keyboard_feedback_settings" app:isModifier="true"/>
+        <Key app:codes="@integer/key_emoji" app:keyLabel="🙂" app:isModifier="true" />
         <Key app:codes="@integer/key_f1" app:isModifier="true"/>
         <Key app:codes="@integer/key_space" app:keyIcon="@drawable/sym_keyboard_space" app:iconPreview="@drawable/sym_keyboard_feedback_space" app:keyWidth="35%p" app:isModifier="true"/>
         <Key app:codes="@integer/key_tab" app:keyIcon="@drawable/sym_keyboard_tab" app:iconPreview="@drawable/sym_keyboard_feedback_tab" app:isModifier="true"/>
