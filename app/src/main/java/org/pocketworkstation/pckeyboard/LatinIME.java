@@ -75,8 +75,10 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -459,11 +461,15 @@ public class LatinIME extends InputMethodService implements
     private int nextLayoutOverride(int baseMode, int override) {
         Set<String> enabled = PreferenceManager.getDefaultSharedPreferences(this)
                 .getStringSet(PREF_SWITCHABLE_LAYOUTS, null);
+        if (enabled == null) {
+            enabled = new HashSet<String>(Arrays.asList(
+                    getResources().getStringArray(R.array.default_switchable_layouts)));
+        }
         int current = getKeyboardModeNum(baseMode, override);
         for (int step = 1; step < mNumKeyboardModes; ++step) {
             int candidate = (override + step) % mNumKeyboardModes;
             int mode = getKeyboardModeNum(baseMode, candidate);
-            if (mode != current && (enabled == null || enabled.contains(Integer.toString(mode)))) {
+            if (mode != current && enabled.contains(Integer.toString(mode))) {
                 return candidate;
             }
         }

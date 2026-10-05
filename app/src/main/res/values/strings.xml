@@ -410,6 +410,11 @@
         <item>1</item>
         <item>2</item>
     </string-array>
+    <!-- The 5-row compact layout is US QWERTY only, so it is left out by default. -->
+    <string-array name="default_switchable_layouts" translatable="false">
+        <item>0</item>
+        <item>2</item>
+    </string-array>
 
     <string name="title_ctrl_a_override" translatable="false">Ctrl-A (select all) override</string>
     <string name="toast_ctrl_a_override_info" translatable="false">Ctrl-A is disabled. Use Ctrl-Alt-A instead, or enable it in settings.</string>

@@ -77,7 +77,7 @@
             android:dialogTitle="@string/title_switchable_layouts"
             android:entries="@array/keyboard_mode_entries"
             android:entryValues="@array/keyboard_mode_values"
-            android:defaultValue="@array/keyboard_mode_values"
+            android:defaultValue="@array/default_switchable_layouts"
             android:persistent="true"
             />
 
