@@ -148,6 +148,7 @@ public class InputLanguageSelection extends PreferenceActivity {
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.language_prefs);
+        KeyboardTestButton.attach(this);
         // Get the settings preferences
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(this);
         String selectedLanguagePref = sp.getString(LatinIME.PREF_SELECTED_LANGUAGES, "");

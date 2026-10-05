@@ -32,6 +32,7 @@ public class PrefScreenView extends PreferenceActivity
     protected void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         addPreferencesFromResource(R.xml.prefs_view);
+        KeyboardTestButton.attach(this);
         SharedPreferences prefs = getPreferenceManager().getSharedPreferences();
         prefs.registerOnSharedPreferenceChangeListener(this);
         mRenderModePreference = (ListPreference) findPreference(LatinIME.PREF_RENDER_MODE);

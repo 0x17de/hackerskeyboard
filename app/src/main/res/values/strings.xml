@@ -718,6 +718,9 @@
     <string name="emoji_space">Space</string>
     <string name="emoji_delete">Delete</string>
     <string name="emoji_resize">Resize the emoji palette</string>
+    <string name="keyboard_test_button">Try the keyboard</string>
+    <string name="keyboard_test_hint">Try the keyboard here</string>
+    <string name="keyboard_test_not_selected">Select Hacker\'s Keyboard to try it</string>
     <string name="emoji_loading">Loading emoji…</string>
     <string name="emoji_recents_empty">Emoji you use will show up here</string>
     <string name="emoji_settings_category">Emoji</string>
