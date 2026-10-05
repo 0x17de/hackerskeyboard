@@ -3591,7 +3591,8 @@ public class LatinIME extends InputMethodService implements
                 .getBoolean(R.bool.default_popup_preview));
         mAutoCapPref = sp.getBoolean(PREF_AUTO_CAP, getResources().getBoolean(
                 R.bool.default_auto_cap));
-        mQuickFixes = sp.getBoolean(PREF_QUICK_FIXES, true);
+        mQuickFixes = sp.getBoolean(PREF_QUICK_FIXES, mResources
+                .getBoolean(R.bool.default_quick_fixes));
 
         mShowSuggestions = sp.getBoolean(PREF_SHOW_SUGGESTIONS, mResources
                 .getBoolean(R.bool.default_suggestions));
