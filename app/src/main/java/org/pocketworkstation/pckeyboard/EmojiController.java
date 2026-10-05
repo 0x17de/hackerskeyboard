@@ -18,6 +18,7 @@ package org.pocketworkstation.pckeyboard;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.os.Build;
 import android.os.Handler;
@@ -55,6 +56,11 @@ public class EmojiController implements EmojiPalettesView.Listener, EmojiSearchV
     /** Emoji the pre-Marshmallow system font can be relied on to have. */
     private static final float MAX_VERSION_BEFORE_M = 0.7f;
     private static final float MIN_PALETTE_HEIGHT_DP = 180;
+    /** The palette can be resized up to this fraction of the screen height. */
+    private static final float MAX_PALETTE_HEIGHT_FRACTION = 0.75f;
+    /** Height the palette is resized to beyond the keyboard height, in dp, per orientation. */
+    private static final String PREF_PALETTE_EXTRA_HEIGHT_PORTRAIT = "emoji_palette_extra_height_portrait";
+    private static final String PREF_PALETTE_EXTRA_HEIGHT_LANDSCAPE = "emoji_palette_extra_height_landscape";
 
     private final LatinIME mIme;
     private final EmojiHistory mHistory;
@@ -68,11 +74,14 @@ public class EmojiController implements EmojiPalettesView.Listener, EmojiSearchV
     private List<String> mLoadingLanguages;
 
     private LatinKeyboardView mKeyboardView;
+    private KeyboardFrame mFrame;
     private EmojiPalettesView mPalette;
     private EmojiSearchView mSearch;
     private boolean mPaletteShown;
     private boolean mSearching;
     private final Set<String> mSuggestedEmoji = new HashSet<String>();
+    /** Palette height when the resize handle was grabbed. */
+    private int mResizeStartHeight;
 
     public EmojiController(LatinIME ime) {
         mIme = ime;
@@ -111,6 +120,8 @@ public class EmojiController implements EmojiPalettesView.Listener, EmojiSearchV
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         KeyboardFrame frame = new KeyboardFrame(context, theme.dp(MIN_PALETTE_HEIGHT_DP));
+        frame.setExtraHeight(theme.dp(mPrefs.getFloat(extraHeightPref(), 0)));
+        mFrame = frame;
         container.addView(frame, new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         ViewGroup oldParent = (ViewGroup) keyboardView.getParent();
@@ -130,13 +141,44 @@ public class EmojiController implements EmojiPalettesView.Listener, EmojiSearchV
         return container;
     }
 
-    /** Sizes the palette to exactly cover the keyboard it replaces. */
+    private String extraHeightPref() {
+        return mIme.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE
+                ? PREF_PALETTE_EXTRA_HEIGHT_LANDSCAPE : PREF_PALETTE_EXTRA_HEIGHT_PORTRAIT;
+    }
+
+    /**
+     * Sizes the palette to cover the keyboard it replaces, plus the extra
+     * height the palette was resized to.
+     */
     private static class KeyboardFrame extends FrameLayout {
         private final int mMinPaletteHeight;
+        /** Palette height beyond the keyboard height; negative if smaller. */
+        private int mExtraHeight;
 
         KeyboardFrame(Context context, int minPaletteHeight) {
             super(context);
             mMinPaletteHeight = minPaletteHeight;
+        }
+
+        int getKeyboardHeight() {
+            return getChildAt(0).getMeasuredHeight();
+        }
+
+        int getExtraHeight() {
+            return mExtraHeight;
+        }
+
+        void setExtraHeight(int extraHeight) {
+            if (extraHeight == mExtraHeight) return;
+            mExtraHeight = extraHeight;
+            requestLayout();
+        }
+
+        int paletteHeight(int keyboardHeight) {
+            int max = Math.round(getResources().getDisplayMetrics().heightPixels
+                    * MAX_PALETTE_HEIGHT_FRACTION);
+            int min = Math.min(mMinPaletteHeight, max);
+            return Math.max(min, Math.min(keyboardHeight + mExtraHeight, Math.max(max, keyboardHeight)));
         }
 
         @Override
@@ -147,7 +189,7 @@ public class EmojiController implements EmojiPalettesView.Listener, EmojiSearchV
             int width = keyboard.getMeasuredWidth();
             int height = keyboard.getMeasuredHeight();
             if (palette.getVisibility() != GONE) {
-                height = Math.max(height, mMinPaletteHeight);
+                height = paletteHeight(height);
                 palette.measure(MeasureSpec.makeMeasureSpec(width, MeasureSpec.EXACTLY),
                         MeasureSpec.makeMeasureSpec(height, MeasureSpec.EXACTLY));
             }
@@ -307,6 +349,25 @@ public class EmojiController implements EmojiPalettesView.Listener, EmojiSearchV
 
     public void onSearchClosed() {
         showPalette();
+    }
+
+    public void onPaletteResizeStart() {
+        mResizeStartHeight = mPalette.getHeight();
+    }
+
+    public void onPaletteResize(float dy) {
+        // Dragging up (negative dy) makes the palette taller.
+        int height = mResizeStartHeight - Math.round(dy);
+        mFrame.setExtraHeight(height - mFrame.getKeyboardHeight());
+    }
+
+    public void onPaletteResizeEnd() {
+        // Store what the frame can actually apply, not where the finger went.
+        int keyboardHeight = mFrame.getKeyboardHeight();
+        int extra = mFrame.paletteHeight(keyboardHeight) - keyboardHeight;
+        mFrame.setExtraHeight(extra);
+        float density = mIme.getResources().getDisplayMetrics().density;
+        mPrefs.edit().putFloat(extraHeightPref(), extra / density).apply();
     }
 
     // ---------------------------------------------------------- suggestions

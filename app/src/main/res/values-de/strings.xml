@@ -159,6 +159,7 @@
     <string name="emoji_search_no_results">Keine Emoji gefunden</string>
     <string name="emoji_space">Leertaste</string>
     <string name="emoji_delete">Löschen</string>
+    <string name="emoji_resize">Größe der Emoji-Auswahl ändern</string>
     <string name="emoji_loading">Emoji werden geladen…</string>
     <string name="emoji_recents_empty">Hier erscheinen deine zuletzt verwendeten Emoji</string>
     <string name="emoji_settings_category">Emoji</string>

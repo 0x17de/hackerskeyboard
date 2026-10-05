@@ -18,6 +18,9 @@ package org.pocketworkstation.pckeyboard;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.util.TypedValue;
 import android.view.Gravity;
@@ -38,8 +41,9 @@ import java.util.List;
 /**
  * The emoji palette shown in place of the keyboard: one continuously
  * scrolling grid of all categories (recently used first) with category tabs
- * that follow the scroll position, a skin tone picker on long press, and a
- * bottom bar to go back to the keyboard, search, type a space or delete.
+ * that follow the scroll position, a skin tone picker on long press, a
+ * handle on top to make the palette taller or smaller, and a bottom bar to
+ * go back to the keyboard, search, type a space or delete.
  */
 @SuppressLint("ViewConstructor")
 public class EmojiPalettesView extends FrameLayout
@@ -53,6 +57,12 @@ public class EmojiPalettesView extends FrameLayout
         void onPaletteKeyFeedback(int primaryCode);
         void onSwitchToKeyboard();
         void onSearchRequested();
+        /** The resize handle was grabbed. */
+        void onPaletteResizeStart();
+        /** The resize handle moved by dy pixels since it was grabbed (up is negative). */
+        void onPaletteResize(float dy);
+        /** The resize handle was released. */
+        void onPaletteResizeEnd();
     }
 
     /** Category ids from emoji.txt, in tab order after "recents". */
@@ -118,6 +128,9 @@ public class EmojiPalettesView extends FrameLayout
         LinearLayout content = new LinearLayout(context);
         content.setOrientation(LinearLayout.VERTICAL);
         addView(content, new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+
+        content.addView(new ResizeHandle(context), new LinearLayout.LayoutParams(
+                LayoutParams.MATCH_PARENT, theme.dp(16)));
 
         mTabStrip = new LinearLayout(context);
         mTabStrip.setOrientation(LinearLayout.HORIZONTAL);
@@ -491,6 +504,61 @@ public class EmojiPalettesView extends FrameLayout
             } else {
                 ((TextView) holder.itemView).setText(item.text);
             }
+        }
+    }
+
+    /**
+     * A grip bar on top of the palette: dragging it up makes the palette
+     * taller to see more emoji at once, dragging it down makes it smaller.
+     */
+    private class ResizeHandle extends View {
+        private final Paint mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        private final RectF mGrip = new RectF();
+        private float mDownY;
+        private boolean mDragging;
+
+        ResizeHandle(Context context) {
+            super(context);
+            mPaint.setColor(mTheme.withAlpha(mTheme.textColor, 0x60));
+            setContentDescription(context.getString(R.string.emoji_resize));
+        }
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            float width = mTheme.dp(mDragging ? 48 : 36);
+            float height = mTheme.dp(4);
+            float x = (getWidth() - width) / 2f;
+            float y = (getHeight() - height) / 2f;
+            mGrip.set(x, y, x + width, y + height);
+            canvas.drawRoundRect(mGrip, height / 2f, height / 2f, mPaint);
+        }
+
+        @SuppressLint("ClickableViewAccessibility")
+        @Override
+        public boolean onTouchEvent(MotionEvent event) {
+            switch (event.getActionMasked()) {
+            case MotionEvent.ACTION_DOWN:
+                mPicker.dismiss();
+                mDownY = event.getRawY();
+                mDragging = true;
+                getParent().requestDisallowInterceptTouchEvent(true);
+                mListener.onPaletteKeyFeedback(0);
+                mListener.onPaletteResizeStart();
+                invalidate();
+                return true;
+            case MotionEvent.ACTION_MOVE:
+                if (mDragging) mListener.onPaletteResize(event.getRawY() - mDownY);
+                return true;
+            case MotionEvent.ACTION_UP:
+            case MotionEvent.ACTION_CANCEL:
+                if (mDragging) {
+                    mDragging = false;
+                    mListener.onPaletteResizeEnd();
+                    invalidate();
+                }
+                return true;
+            }
+            return true;
         }
     }
 
