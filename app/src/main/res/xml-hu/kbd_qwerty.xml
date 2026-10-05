@@ -185,7 +185,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="40%p"
+            app:keyWidth="46.6666667%p"
             app:isModifier="true" />
         <Key
             app:keyLabel="."
@@ -196,7 +196,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="20%p"
+            app:keyWidth="13.3333333%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
@@ -217,7 +217,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="40%p"
+            app:keyWidth="46.6666667%p"
             app:isModifier="true" />
         <Key
             app:keyLabel="."
@@ -228,7 +228,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="20%p"
+            app:keyWidth="13.3333333%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
@@ -249,7 +249,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="40%p"
+            app:keyWidth="46.6666667%p"
             app:isModifier="true" />
         <Key
             app:keyLabel="."
@@ -260,7 +260,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="20%p"
+            app:keyWidth="13.3333333%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
@@ -314,7 +314,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="30%p"
+            app:keyWidth="36.6666667%p"
             app:isModifier="true" />
         <Key
             app:codes="@integer/key_tab"
@@ -330,7 +330,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="20%p"
+            app:keyWidth="13.3333333%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
@@ -356,7 +356,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="30%p"
+            app:keyWidth="38.3333333%p"
             app:isModifier="true" />
         <Key
             app:keyLabel="."
@@ -367,7 +367,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="25%p"
+            app:keyWidth="16.6666667%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
@@ -393,7 +393,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="30%p"
+            app:keyWidth="38.3333333%p"
             app:isModifier="true" />
         <Key
             app:keyLabel="."
@@ -404,7 +404,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="25%p"
+            app:keyWidth="16.6666667%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
@@ -430,7 +430,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="30%p"
+            app:keyWidth="38.3333333%p"
             app:isModifier="true" />
         <Key
             app:keyLabel="."
@@ -441,7 +441,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="25%p"
+            app:keyWidth="16.6666667%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
@@ -505,7 +505,7 @@
             app:codes="@integer/key_space"
             app:keyIcon="@drawable/sym_keyboard_space"
             app:iconPreview="@drawable/sym_keyboard_feedback_space"
-            app:keyWidth="30%p"
+            app:keyWidth="35%p"
             app:isModifier="true" />
         <Key
             app:codes="@integer/key_tab"
@@ -521,7 +521,7 @@
             app:codes="@integer/key_return"
             app:keyIcon="@drawable/sym_keyboard_return"
             app:iconPreview="@drawable/sym_keyboard_feedback_return"
-            app:keyWidth="15%p"
+            app:keyWidth="10%p"
             app:isModifier="true"
             app:keyEdgeFlags="right" />
     </Row>
